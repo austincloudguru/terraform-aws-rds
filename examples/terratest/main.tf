@@ -23,5 +23,4 @@ module "rds" {
   source = "../../"
   name   = "terratest"
   vpc_id = module.vpc.vpc_id
-  engine = "oracle-se"
 }
