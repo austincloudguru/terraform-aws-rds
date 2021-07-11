@@ -7,10 +7,6 @@ provider "aws" {
 
 data "aws_availability_zones" "available" {}
 
-data "aws_route53_zone" "external" {
-  name = join("", [var.tld, "."])
-}
-
 module "vpc" {
   source             = "terraform-aws-modules/vpc/aws"
   name               = "terratest-vpc"
@@ -21,4 +17,11 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = true
   tags               = var.tags
+}
+
+module "rds" {
+  source = "../../"
+  name   = "terratest"
+  vpc_id = module.vpc.vpc_id
+  engine = "oracle-se"
 }

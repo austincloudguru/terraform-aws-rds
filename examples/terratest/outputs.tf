@@ -1,3 +1,3 @@
-output "tld" {
-  value = data.aws_route53_zone.external.name
+output "security_group_name" {
+  value = module.rds.security_group_name
 }
