@@ -1,5 +1,5 @@
 # AWS RDS Module
-[![Terratest](https://github.com/austincloudguru/terraform-aws-rds/Terratest/badge.svg?event=push)](https://github.com/austincloudguru/terraform-aws-rds/actions?query=workflow%3ATerratest) 
+[![Terratest](https://github.com/austincloudguru/terraform-aws-rds/workflows/Terratest/badge.svg?event=push)](https://github.com/austincloudguru/terraform-aws-rds/actions?query=workflow%3ATerratest) 
 ![Latest Version](https://img.shields.io/github/v/tag/austincloudguru/terraform-aws-rds?sort=semver&label=Latest%20Version)
 [![License](https://img.shields.io/github/license/austincloudguru/terraform-aws-rds)](https://github.com/austincloudguru/terraform-aws-rds/blob/master/LICENSE)
 
