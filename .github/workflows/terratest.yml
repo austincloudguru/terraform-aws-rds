@@ -45,4 +45,4 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Run the Tests
-        run: cd ./test; go test -v
+        run: cd ./test; go test -v -timeout 30m

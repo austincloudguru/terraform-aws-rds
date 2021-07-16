@@ -40,3 +40,78 @@ resource "aws_security_group_rule" "this_egress" {
   self              = lookup(each.value, "self", null) == false ? null : each.value.self
   cidr_blocks       = lookup(each.value, "cidr_blocks", null)
 }
+
+#-----------------------------------
+# Create the KMS Keys
+#-----------------------------------
+resource "aws_kms_key" "this" {
+  count                   = var.encrypt_db ? 1 : 0
+  description             = join(" ", ["Encryption Key for", var.name, "RDS"])
+  deletion_window_in_days = var.deletion_window_in_days
+  enable_key_rotation     = var.enable_key_rotation
+  tags = merge(
+    {
+      "Name" = var.name
+    },
+    var.tags
+  )
+}
+
+resource "aws_kms_alias" "this" {
+  count         = var.encrypt_db ? 1 : 0
+  name          = join("", ["alias/", var.name, "-rds"])
+  target_key_id = aws_kms_key.this[0].key_id
+}
+
+#-----------------------------------
+# Create the RDS Instance
+#-----------------------------------
+resource "aws_db_instance" "this" {
+  identifier                            = var.name
+  multi_az                              = var.multi_az
+  instance_class                        = var.instance_class
+  deletion_protection                   = var.deletion_protection
+  db_subnet_group_name                  = var.db_subnet_group_name
+  port                                  = var.port
+  publicly_accessible                   = var.publicly_accessible
+  engine                                = var.engine
+  engine_version                        = var.engine_version
+  auto_minor_version_upgrade            = var.auto_minor_version_upgrade
+  allow_major_version_upgrade           = var.allow_major_version_upgrade
+  allocated_storage                     = var.allocated_storage
+  max_allocated_storage                 = var.max_allocated_storage
+  storage_type                          = var.storage_type
+  iops                                  = var.storage_type == "io1" ? var.iops : 0
+  storage_encrypted                     = var.encrypt_db
+  kms_key_id                            = var.encrypt_db ? aws_kms_key.this[0].arn : null
+  backup_retention_period               = var.backup_retention_period
+  name                                  = var.database_name
+  username                              = var.username
+  password                              = var.password
+  skip_final_snapshot                   = var.skip_final_snapshot
+  final_snapshot_identifier             = var.skip_final_snapshot ? null : var.final_snapshot_identifier
+  vpc_security_group_ids                = [aws_security_group.this.id]
+  apply_immediately                     = var.apply_immediately
+  availability_zone                     = var.availability_zone
+  ca_cert_identifier                    = var.ca_cert_identifier
+  character_set_name                    = var.character_set_name
+  enabled_cloudwatch_logs_exports       = var.enabled_cloudwatch_logs_exports
+  maintenance_window                    = var.maintenance_window
+  monitoring_interval                   = var.monitoring_interval
+  monitoring_role_arn                   = var.monitoring_role_arn
+  iam_database_authentication_enabled   = var.iam_database_authentication_enabled
+  performance_insights_enabled          = var.performance_insights_enabled
+  performance_insights_kms_key_id       = var.performance_insights_kms_key_id
+  performance_insights_retention_period = var.performance_insights_retention_period
+  snapshot_identifier                   = var.snapshot_identifier
+  option_group_name                     = var.option_group_name
+  parameter_group_name                  = var.parameter_group_name
+
+
+  tags = merge(
+    {
+      "Name" = var.name
+    },
+    var.tags
+  )
+}
