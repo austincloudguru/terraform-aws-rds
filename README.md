@@ -5,6 +5,24 @@
 
 Terraform module which creates an RDS Instance 
 
+## Usage
+
+```hcl
+module "rds_instance {
+  source = austincloudguru/rds/aws
+  # You should pin the module to a specific version
+  # version              = "x.x.x"
+  name                 = "app_name"
+  engine               = "mysql"
+  engin_version        = "5.7.17"
+  db_subnet_group_name = "database"
+  deletion_protection  = false
+  multi_az             = false
+  skip_final_snapshot  = true
+  vpc_id               = "vpc-xxxxxxxx"
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
