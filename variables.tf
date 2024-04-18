@@ -134,7 +134,7 @@ variable "engine" {
 variable "engine_version" {
   description = "The engine version to use"
   type        = string
-  default     = "12.7"
+  default     = "16.2"
 }
 
 variable "final_snapshot_identifier" {
@@ -152,7 +152,7 @@ variable "iam_database_authentication_enabled" {
 variable "instance_class" {
   description = "The instance type of the RDS instance"
   type        = string
-  default     = "db.t2.medium"
+  default     = "db.m5d.large"
 }
 
 variable "iops" {
@@ -381,4 +381,10 @@ variable "username" {
 variable "vpc_id" {
   description = "The name of the VPC that EFS will be deployed to"
   type        = string
+}
+
+variable "policy" {
+  description = "A valid policy JSON document. Although this is a key policy, not an IAM policy, an aws_iam_policy_document, in the form that designates a principal, can be used."
+  type        = string
+  default     = null
 }
