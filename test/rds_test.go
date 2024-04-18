@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 	//"fmt"
-	// "time"
+	"time"
   // http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
 	"github.com/gruntwork-io/terratest/modules/aws"
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -26,6 +26,7 @@ func TestExamplesTerraform(t *testing.T) {
   tfRdsInstanceId := terraform.Output(t, terraformOpts, "rds_id")
   tfRdsAddress := terraform.Output(t, terraformOpts, "rds_address")
 
+  time.Sleep(30 * time.Second)
   awsRdsAddress := aws.GetAddressOfRdsInstance(t, tfRdsInstanceId, "us-west-2")
 
   assert.Equal(t, awsRdsAddress, tfRdsAddress)
