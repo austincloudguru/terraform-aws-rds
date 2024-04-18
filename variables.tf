@@ -152,7 +152,7 @@ variable "iam_database_authentication_enabled" {
 variable "instance_class" {
   description = "The instance type of the RDS instance"
   type        = string
-  default     = "db.t2.medium"
+  default     = "db.m5d.large"
 }
 
 variable "iops" {
