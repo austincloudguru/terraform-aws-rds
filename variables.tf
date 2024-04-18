@@ -134,7 +134,7 @@ variable "engine" {
 variable "engine_version" {
   description = "The engine version to use"
   type        = string
-  default     = "12.7"
+  default     = "16.2"
 }
 
 variable "final_snapshot_identifier" {
