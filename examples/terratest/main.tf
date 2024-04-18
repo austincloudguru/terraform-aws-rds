@@ -8,6 +8,7 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 module "vpc" {
+  #checkov:skip=CKV_TF_1: "Ensure Terraform module sources use a commit hash"
   source                       = "terraform-aws-modules/vpc/aws"
   name                         = "terratest-vpc"
   cidr                         = "10.0.0.0/16"

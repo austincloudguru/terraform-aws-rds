@@ -382,3 +382,9 @@ variable "vpc_id" {
   description = "The name of the VPC that EFS will be deployed to"
   type        = string
 }
+
+variable "policy" {
+  description = "A valid policy JSON document. Although this is a key policy, not an IAM policy, an aws_iam_policy_document, in the form that designates a principal, can be used."
+  type        = string
+  default     = null
+}
