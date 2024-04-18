@@ -74,7 +74,7 @@ run "database_tests" {
   }
 
   assert {
-    condition     = data.aws_db_instance.this.endpoint == run.setup_database.aws_db_instance.endpoint 
+    condition     = data.aws_db_instance.this.endpoint == run.setup_database.endpoint 
     error_message = "Something is not quite right with the database"
   }
 
