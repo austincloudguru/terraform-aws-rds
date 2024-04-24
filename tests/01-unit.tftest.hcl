@@ -32,7 +32,7 @@ run "validate_variables" {
 
 }
 
-run "validate_terriform" {
+run "validate_terraform" {
   command = plan
   
   variables {
